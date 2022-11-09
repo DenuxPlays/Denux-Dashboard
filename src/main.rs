@@ -1,16 +1,20 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
 
+#[path = "sites/html_util.rs"]
+mod html_util;
+
 #[derive(Clone, Routable, PartialEq, Debug)]
 pub enum Route {
     #[at("/")]
     Home,
+
     #[not_found]
     #[at("/404")]
     NotFound,
 }
 
-fn switch(routes: &Route) -> Html {
+fn switch(routes: Route) -> Html {
     return match routes {
         Route::Home => html! { <Home /> },
         Route::NotFound => html! { <NotFound /> },
@@ -21,7 +25,7 @@ fn switch(routes: &Route) -> Html {
 fn app() -> Html {
     return html! {
         <BrowserRouter>
-            <Switch<Route> render={Switch::render(switch)} />
+            <Switch<Route> render={switch} />
         </BrowserRouter>
     };
 }
@@ -30,9 +34,6 @@ fn app() -> Html {
 fn home() -> Html {
     return html! {
         <>
-            <head>
-                <title>{"Denux"}</title>
-            </head>
             <body>
                 <p>{"Nothing to see"}</p>
             </body>
@@ -44,17 +45,14 @@ fn home() -> Html {
 pub fn not_found() -> Html {
     return html! {
         <>
-            <head>
-                <title>{"URL not found"}</title>
-            </head>
-            <body>
-                <p>{"URL not found"}</p>
-                <Link<Route> to={Route::Home}>{ "click here to go home" }</Link<Route>>
-            </body>
+            <p>{"URL not found"}</p>
+                <div class={"home-button"}>
+                    <button><Link<Route> to={Route::Home}>{ "click here to go home" }</Link<Route>></button>
+                </div>
         </>
     };
 }
 
 fn main() {
-    yew::start_app::<Main>();
+    yew::Renderer::<Main>::new().render();
 }

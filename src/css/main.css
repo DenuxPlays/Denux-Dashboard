@@ -13,3 +13,11 @@ html,
 #root {
     height: 100%;
 }
+
+#home-button button:default {
+    padding: 10px 24px;
+    transition-duration: 0.4s;
+
+    background-color: #555555;
+    color: white;
+}
