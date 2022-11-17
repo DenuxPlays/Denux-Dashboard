@@ -7,5 +7,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-yew = { git = "https://github.com/yewstack/yew/", features = ["csr"] }
-yew-router = { git = "https://github.com/yewstack/yew.git" }
+yew = "0.19"
+yew-router = "0.16"
+#yew = { git = "https://github.com/yewstack/yew/", features = ["csr"] }
+#yew-router = { git = "https://github.com/yewstack/yew" }
+gloo = { version = "0.8.0", features = ["futures"] }
+stylist = { version = "0.10.1", features = ["yew_integration", "yew"] }
+bounce = { version = "0.3.0", features = ["helmet"] }

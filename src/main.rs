@@ -1,10 +1,9 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
+use bounce::helmet::{Helmet, HelmetBridge};
+use bounce::BounceRoot;
 
-#[path = "sites/html_util.rs"]
-mod html_util;
-
-#[derive(Clone, Routable, PartialEq, Debug)]
+#[derive(Clone, Routable, PartialEq, Eq, Debug)]
 pub enum Route {
     #[at("/")]
     Home,
@@ -14,19 +13,26 @@ pub enum Route {
     NotFound,
 }
 
-fn switch(routes: Route) -> Html {
+fn switch(routes: &Route) -> Html {
     return match routes {
         Route::Home => html! { <Home /> },
         Route::NotFound => html! { <NotFound /> },
     };
 }
 
-#[function_component(Main)]
+#[function_component(App)]
 fn app() -> Html {
     return html! {
-        <BrowserRouter>
-            <Switch<Route> render={switch} />
-        </BrowserRouter>
+        <BounceRoot>
+            <HelmetBridge default_title="Denux"/>
+            <Helmet>
+                <meta charset="utf-8" />
+                <link rel="stylesheet" href="css/main.css" />
+            </Helmet>
+            <BrowserRouter>
+                <Switch<Route> render={Switch::render(switch)} />
+            </BrowserRouter>
+        </BounceRoot>
     };
 }
 
@@ -45,14 +51,17 @@ fn home() -> Html {
 pub fn not_found() -> Html {
     return html! {
         <>
+            <Helmet>
+                <title>{"Page not found"}</title>
+            </Helmet>
             <p>{"URL not found"}</p>
-                <div class={"home-button"}>
-                    <button><Link<Route> to={Route::Home}>{ "click here to go home" }</Link<Route>></button>
-                </div>
+            <div class={"home-button"}>
+                <button><Link<Route> to={Route::Home}>{ "click here to go home" }</Link<Route>></button>
+            </div>
         </>
     };
 }
 
 fn main() {
-    yew::Renderer::<Main>::new().render();
+    yew::start_app::<App>();
 }
