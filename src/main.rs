@@ -25,10 +25,6 @@ fn app() -> Html {
     return html! {
         <BounceRoot>
             <HelmetBridge default_title="Denux"/>
-            <Helmet>
-                <meta charset="utf-8" />
-                <link rel="stylesheet" href="css/main.css" />
-            </Helmet>
             <BrowserRouter>
                 <Switch<Route> render={Switch::render(switch)} />
             </BrowserRouter>
@@ -40,6 +36,9 @@ fn app() -> Html {
 fn home() -> Html {
     return html! {
         <>
+        <Helmet>
+            <link rel="stylesheet" href="css/main.css" />
+        </Helmet>
             <body>
                 <p>{"Nothing to see"}</p>
             </body>
@@ -53,11 +52,10 @@ pub fn not_found() -> Html {
         <>
             <Helmet>
                 <title>{"Page not found"}</title>
+                <link rel="stylesheet" href="css/sites/404.css" />
             </Helmet>
             <p>{"URL not found"}</p>
-            <div class={"home-button"}>
-                <button><Link<Route> to={Route::Home}>{ "click here to go home" }</Link<Route>></button>
-            </div>
+            <button><Link<Route> to={Route::Home}>{ "click here to go home" }</Link<Route>></button>
         </>
     };
 }
