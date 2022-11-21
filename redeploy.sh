@@ -10,7 +10,7 @@ cd redeploy
 bash trunk build --release
 
 if [ $? -eq 0 ]; then
-        rmdir -r $DIR/deploy
+        rm -r $DIR/deploy
         mv $DIR/redeploy/dist $DIR/deploy
 else
         echo FAILED TO COMPILE
