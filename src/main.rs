@@ -37,7 +37,7 @@ fn home() -> Html {
     return html! {
         <>
         <Helmet>
-            <link rel="stylesheet" href="css/main.css" />
+            <link rel="stylesheet" href="assets/css/main.css" />
         </Helmet>
             <body>
                 <p>{"Nothing to see"}</p>
@@ -52,7 +52,7 @@ pub fn not_found() -> Html {
         <>
             <Helmet>
                 <title>{"Page not found"}</title>
-                <link rel="stylesheet" href="css/sites/404.css" />
+                <link rel="stylesheet" href="assets/css/sites/404.css" />
             </Helmet>
             <p>{"URL not found"}</p>
             <button><Link<Route> to={Route::Home}>{ "click here to go home" }</Link<Route>></button>
