@@ -3,7 +3,7 @@ use yew_router::prelude::*;
 use bounce::helmet::{Helmet, HelmetBridge};
 use bounce::BounceRoot;
 
-#[derive(Clone, Routable, PartialEq, Eq, Debug)]
+#[derive(Clone, Routable, PartialEq, Eq)]
 pub enum Route {
     #[at("/")]
     Home,
@@ -13,7 +13,7 @@ pub enum Route {
     NotFound,
 }
 
-fn switch(routes: &Route) -> Html {
+fn switch(routes: Route) -> Html {
     return match routes {
         Route::Home => html! { <Home /> },
         Route::NotFound => html! { <NotFound /> },
@@ -26,7 +26,7 @@ fn app() -> Html {
         <BounceRoot>
             <HelmetBridge default_title="Denux"/>
             <BrowserRouter>
-                <Switch<Route> render={Switch::render(switch)} />
+                <Switch<Route> render={switch} />
             </BrowserRouter>
         </BounceRoot>
     };
@@ -38,6 +38,7 @@ fn home() -> Html {
         <>
         <Helmet>
             <link rel="stylesheet" href="assets/css/main.css" />
+            <link rel="icon" href="assets/img/ServerLogo.jpg" />
         </Helmet>
             <body>
                 <p>{"Nothing to see"}</p>
@@ -53,6 +54,7 @@ pub fn not_found() -> Html {
             <Helmet>
                 <title>{"Page not found"}</title>
                 <link rel="stylesheet" href="assets/css/sites/404.css" />
+                <link rel="icon" href="assets/img/ServerLogo.jpg" />
             </Helmet>
             <p>{"URL not found"}</p>
             <button><Link<Route> to={Route::Home}>{ "click here to go home" }</Link<Route>></button>
@@ -61,5 +63,5 @@ pub fn not_found() -> Html {
 }
 
 fn main() {
-    yew::start_app::<App>();
+    yew::Renderer::<App>::new().render();
 }

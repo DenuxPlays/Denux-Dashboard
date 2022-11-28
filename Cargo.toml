@@ -18,6 +18,6 @@ opt-level = 's'
 lto = true
 
 [dependencies]
-yew = "0.19"
-yew-router = "0.16"
-bounce = { version = "0.3.0", features = ["helmet"] }
+yew = { version = "0.20.0", features = ["csr"] }
+yew-router = "0.17.0"
+bounce = { version = "0.4.0", features = ["helmet"] }
