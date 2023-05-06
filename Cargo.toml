@@ -18,6 +18,4 @@ opt-level = 's'
 lto = true
 
 [dependencies]
-yew = { version = "0.20.0", features = ["csr"] }
-yew-router = "0.17.0"
-bounce = { version = "0.4.0", features = ["helmet"] }
+leptos = { version = "0.2.5", features = ["stable"] }
