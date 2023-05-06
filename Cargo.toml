@@ -20,4 +20,4 @@ lto = true
 [dependencies]
 yew = { version = "0.20.0", features = ["csr"] }
 yew-router = "0.17.0"
-bounce = { version = "0.4.0", features = ["helmet"] }
+bounce = { version = "0.6.1", features = ["helmet"] }
