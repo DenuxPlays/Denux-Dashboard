@@ -1,6 +1,14 @@
+@import url("https://rsms.me/inter/inter.css");
+@font-face {
+    font-family: Inter;
+    src: url("https://rsms.me/inter/inter.css")
+}
+
 body {
-	font-family: sans-serif;
+	font-family: "Inter";
 	text-align: center;
+	font-weight: 800px;
+	font-size: 50px;
 
 	color: #ffffff;
 	background-color: #000000;
