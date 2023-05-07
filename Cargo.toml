@@ -33,6 +33,11 @@ ssr = [
   "leptos_router/ssr",
 ]
 
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 'z'
+
 [package.metadata.leptos]
 # The name used by wasm-bindgen/cargo-leptos for the JS/WASM bundle. Defaults to the crate name   
 output-name = "denux_dashboard"
@@ -82,9 +87,3 @@ lib-features = ["hydrate"]
 #
 # Optional. Defaults to false.
 lib-default-features = false
-
-#[[workspace.metadata.leptos]]
-# project name
-#name = "denux_dashboard"
-#bin-package = "server"
-#lib-package = "front"
