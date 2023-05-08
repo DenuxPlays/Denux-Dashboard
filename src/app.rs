@@ -33,7 +33,10 @@ pub fn App(cx: Scope) -> impl IntoView {
 fn HomePage(cx: Scope) -> impl IntoView {
     view! { cx,
             <div id="navbar">
-                <p>"Space holder"</p>
+                <a href="https://github.com/DenuxPlays" target="_blank">
+                    <img src="github-logo.svg" alt="Github Profile"/>
+                </a>
+                <a>"Space holder"</a>
             </div>
             <div class="centered" id="main">
                 <p><b>"Welcome to nothing"</b></p>

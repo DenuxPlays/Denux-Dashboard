@@ -2,7 +2,6 @@
 @import "/fonts/inter/inter.css";
 @font-face {
     font-family: Inter;
-    src: url(/fonts/inter/inter.css);
 }
 
 body {
@@ -18,5 +17,21 @@ body {
 }
 
 #navbar {
-	/**/
+	--div-height: 45px;
+	height: var(--div-height);
+	width: 99%;
+
+	overflow: hidden;
+	list-style-type: none;
+  	padding: 5px;
+
+	img {
+		height: var(--div-height);
+	}
+	a {
+		line-height: var(--div-height);
+		margin-right: 15px;
+		display: inline-block;
+		vertical-align: text-top;
+	}
 }
