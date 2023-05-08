@@ -1,9 +1,22 @@
+@import "utility.scss";
+@import "/fonts/inter/inter.css";
+@font-face {
+    font-family: Inter;
+    src: url(/fonts/inter/inter.css);
+}
+
 body {
-	font-family: "sans-serif";
-	text-align: center;
-	font-weight: 800px;
-	font-size: 50px;
+	font-family: "Inter";
 
 	color: #ffffff;
 	background-color: #000000;
+}
+
+#main {
+	font-weight: 800px;
+	font-size: 80px;
+}
+
+#navbar {
+	/**/
 }

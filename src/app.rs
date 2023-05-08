@@ -32,6 +32,11 @@ pub fn App(cx: Scope) -> impl IntoView {
 #[component]
 fn HomePage(cx: Scope) -> impl IntoView {
     view! { cx,
-        <p>"Welcome to nothing"</p>
+            <div id="navbar">
+                <p>"Space holder"</p>
+            </div>
+            <div class="centered" id="main">
+                <p><b>"Welcome to nothing"</b></p>
+            </div>
     }
 }
