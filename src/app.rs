@@ -22,6 +22,7 @@ pub fn App(cx: Scope) -> impl IntoView {
             <main>
                 <Routes>
                     <Route path="" view=|cx| view! { cx, <HomePage/> }/>
+                    <Route path="login" view=|cx| view! {cx, <LoginPage/> }/>
                 </Routes>
             </main>
         </Router>
@@ -36,10 +37,27 @@ fn HomePage(cx: Scope) -> impl IntoView {
                 <a href="https://github.com/DenuxPlays" target="_blank">
                     <img src="github-logo.svg" alt="Github Profile"/>
                 </a>
-                <a>"Space holder"</a>
+                <div id="navbar-right">
+                    <a href="/login">"Login"</a>
+                </div>
             </div>
             <div class="centered" id="main">
                 <p><b>"Welcome to nothing"</b></p>
             </div>
+    }
+}
+
+#[component]
+fn LoginPage(cx: Scope) -> impl IntoView {
+        view! { cx,
+        <div class="centered">
+            <label for="uname"><b>"Username"</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" required />    
+
+            <label for="pasw"><b>"Password"</b></label>
+            <input type="password" placeholder="Enter Password" name="pasw" required />
+
+            <button type="submit">"Login"</button>
+      </div>
     }
 }
