@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup cargo leptos
-      run: cargo install --locked cargo-leptos
+      run: cargo install --features no_downloads --locked cargo-leptos
     - name: Build
       run: cargo leptos build
     - name: Run tests
