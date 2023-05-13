@@ -54,8 +54,8 @@ fn LoginPage(cx: Scope) -> impl IntoView {
             <label for="uname"><b>"Username"</b></label>
             <input type="text" placeholder="Enter Username" name="uname" required />
 
-            <label for="pasw"><b>"Password"</b></label>
-            <input type="password" placeholder="Enter Password" name="pasw" required />
+            <label for="passw"><b>"Password"</b></label>
+            <input type="password" placeholder="Enter Password" name="passw" required />
 
             <button type="submit">"Login"</button>
       </div>
