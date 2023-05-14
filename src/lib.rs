@@ -1,6 +1,10 @@
 pub mod app;
 use cfg_if::cfg_if;
 
+mod components;
+
+use self::components::*;
+
 cfg_if! {
 if #[cfg(feature = "hydrate")] {
 
