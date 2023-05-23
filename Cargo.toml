@@ -18,6 +18,8 @@ cfg-if = "1"
 #Leptos
 leptos = { version = "0.3", default-features = false, features = [
   "serde",
+#  "ssr",
+#  "hydrate",
 ] }
 leptos_meta = { version = "0.3", default-features = false }
 leptos_actix = { version = "0.3", optional = true }
@@ -29,9 +31,6 @@ simple_logger = "4"
 
 #Wasm-bindge -> MUST BE 0.2.84 due to a very unstable api (check cargo leptos)
 wasm-bindgen = "=0.2.84"
-
-#Database stuff
-sqlx = {version="0.6", features = ["runtime-actix-rustls"]}
 
 #Serde used for ssr.
 #Check leptos documentation on why this has to be included explicitly.

@@ -61,7 +61,7 @@ fn LoginPage(cx: Scope) -> impl IntoView {
                     "Password"
                     <input type="password" name="password"/>
                 </label>
-                <input type="submit" value="Add"/>
+                <input type="submit" value="Login"/>
             </MultiActionForm>
       </div>
     }
