@@ -16,6 +16,8 @@ async fn main() -> std::io::Result<()> {
         let leptos_options = &conf.leptos_options;
         let site_root = &leptos_options.site_root;
 
+        let _ = LoginFn::register();
+
         App::new()
             .route("/api/{tail:.*}", leptos_actix::handle_server_fns())
             .leptos_routes(

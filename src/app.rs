@@ -49,52 +49,31 @@ fn HomePage(cx: Scope) -> impl IntoView {
 
 #[component]
 fn LoginPage(cx: Scope) -> impl IntoView {
-    let (password, set_password) = create_signal(cx, String::new());
-    let (email, set_email) = create_signal(cx, String::new());
-    
-    let mut logged_in: bool = false;
-    let login_action = move |_| login(email.get(), password.get(), &mut logged_in);
-
+    let login_action = create_server_multi_action::<LoginFn>(cx);
     view! { cx,
         <div class="centered">
-            <label for="uname"><b>"E-Mail"</b></label>
-            <input type="text" placeholder="Enter your E-Mail adress." name="email" required 
-                on:keyup=move |ev: ev::KeyboardEvent| {
-                    let val = event_target_value(&ev);
-                    set_email.update(|v| *v = val);
-                }
-                on:change=move |ev| {
-                    let val = event_target_value(&ev);
-                    set_email.update(|v| *v = val);
-                }
-            />
-            <label for="passw"><b>"Password"</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required 
-                on:keyup=move |ev: ev::KeyboardEvent| {
-                    let val = event_target_value(&ev);
-                    set_password.update(|v| *v = val);
-                }
-                on:change=move |ev| {
-                    let val = event_target_value(&ev);
-                    set_password.update(|v| *v = val);
-                }
- 
-            />
-
-            <button on:click=login_action>
-            "Login"
-            </button>
+            <MultiActionForm action=login_action>
+                <label>
+                    "E-Mail"
+                    <input type="text" name="email"/>
+                </label>
+                <label>
+                    "Password"
+                    <input type="password" name="password"/>
+                </label>
+                <input type="submit" value="Add"/>
+            </MultiActionForm>
       </div>
     }
 }
 
-fn login(email: String, password: String, result: &mut bool) {
+#[server(LoginFn, "/api")]
+pub async fn login(email: String, password: String) -> Result<bool, ServerFnError>{
     log::info!("Login button pressed");
     if email.eq_ignore_ascii_case("test@du-hs.dev") {
-       if password.eq("123HS") {
-            *result = true;
-            return;
-       }
+        if password.eq("123HS") {
+            return Ok(true);
+        }
     }
-    *result = false;
+    return Ok(false);
 }
