@@ -49,10 +49,10 @@ fn HomePage(cx: Scope) -> impl IntoView {
 
 #[component]
 fn LoginPage(cx: Scope) -> impl IntoView {
-    let login_action = create_server_multi_action::<LoginFn>(cx);
+    let login_action = create_server_action::<LoginFn>(cx);
     view! { cx,
         <div class="centered">
-            <MultiActionForm action=login_action>
+            <ActionForm action=login_action>
                 <label>
                     "E-Mail"
                     <input type="text" name="email"/>
@@ -62,18 +62,18 @@ fn LoginPage(cx: Scope) -> impl IntoView {
                     <input type="password" name="password"/>
                 </label>
                 <input type="submit" value="Login"/>
-            </MultiActionForm>
+            </ActionForm>
       </div>
     }
 }
 
 #[server(LoginFn, "/api")]
-pub async fn login(email: String, password: String) -> Result<bool, ServerFnError>{
+pub async fn login(email: String, password: String) -> Result<(), ServerFnError>{
     log::info!("Login button pressed");
     if email.eq_ignore_ascii_case("test@du-hs.dev") {
         if password.eq("123HS") {
-            return Ok(true);
+            return Ok(());
         }
     }
-    return Ok(false);
+    return Err(ServerFnError::ServerError("401".to_string()));
 }
