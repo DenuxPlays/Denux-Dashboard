@@ -2,6 +2,9 @@
 name = "denux_dashboard"
 version = "0.1.0"
 edition = "2021"
+description = "My first try to create a dashboard for my server to automate some things."
+license = "AGPL-3.0"
+repository = "https://github.com/DenuxPlays/Denux-Dashboard"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
