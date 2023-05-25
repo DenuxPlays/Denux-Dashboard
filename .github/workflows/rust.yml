@@ -21,6 +21,6 @@ jobs:
     - name: Building client-side
       run: wasm-pack build --target=web --debug --no-default-features --features=hydrate
     - name: Building server-side
-      run: cargo build --no-default-features --features=ssr
+      run: cargo build --no-default-features --features=ssr --release
     - name: Run tests
-      run: cargo leptos test
+      run: cargo test
