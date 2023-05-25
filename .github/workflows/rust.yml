@@ -19,8 +19,8 @@ jobs:
     - name: Setup wasm-pack
       run: cargo install wasm-pack
     - name: Building client-side
-      run: wasm-pack build --target=web --debug --no-default-features --features=hydrate
+      run: wasm-pack build --target=web --debug --no-default-features --features=hydrate --release
     - name: Building server-side
-      run: cargo build --no-default-features --features=ssr
+      run: cargo build --no-default-features --features=ssr --release
     - name: Run tests
       run: cargo test
