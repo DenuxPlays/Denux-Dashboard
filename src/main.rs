@@ -1,5 +1,6 @@
 use cfg_if::cfg_if;
 
+// boilerplate to run in different modes
 cfg_if! {
 if #[cfg(feature = "ssr")] {
     use axum::{
@@ -10,12 +11,13 @@ if #[cfg(feature = "ssr")] {
         body::Body as AxumBody,
         Router,
     };
-    use denux_dashboard::app::*;
+    use denux_dashboard::app::App;
     use denux_dashboard::auth::*;
     use denux_dashboard::state::AppState;
-    use denux_dashboard::fileserv::file_and_error_handler;
-    use leptos_axum::{LeptosRoutes, generate_route_list, handle_server_fns_with_context};
-    use leptos::*;
+    use denux_dashboard::*;
+    use denux_dashboard::fallback::file_and_error_handler;
+    use leptos_axum::{generate_route_list, LeptosRoutes, handle_server_fns_with_context};
+    use leptos::{log, view, provide_context, get_configuration};
     use sqlx::{SqlitePool, sqlite::SqlitePoolOptions};
     use axum_session::{SessionConfig, SessionLayer, SessionStore};
     use axum_session_auth::{AuthSessionLayer, AuthConfig, SessionSqlitePool};
@@ -42,9 +44,9 @@ if #[cfg(feature = "ssr")] {
         handler(req).await.into_response()
     }
 
-#[tokio::main]
-async fn main() {
-    simple_logger::init_with_level(log::Level::Info).expect("couldn't initialize logging");
+    #[tokio::main]
+    async fn main() {
+        simple_logger::init_with_level(log::Level::Info).expect("couldn't initialize logging");
 
         let pool = SqlitePoolOptions::new()
             .connect("sqlite:Todos.db")
@@ -56,8 +58,6 @@ async fn main() {
         let auth_config = AuthConfig::<i64>::default();
         let session_store = SessionStore::<SessionSqlitePool>::new(Some(pool.clone().into()), session_config);
         session_store.initiate().await.unwrap();
-
-        _ = Login::register();
 
         // Setting this to None means we'll be using cargo-leptos and its env vars
         let conf = get_configuration(None).await.unwrap();
@@ -87,13 +87,14 @@ async fn main() {
             .serve(app.into_make_service())
             .await
             .unwrap();
-}
-}
+    }
 }
 
-#[cfg(not(feature = "ssr"))]
-pub fn main() {
-    // no client-side main function
-    // unless we want this to work with e.g., Trunk for pure client-side testing
-    // see lib.rs for hydration function instead
+    // client-only stuff for Trunk
+    else {
+        pub fn main() {
+            // This example cannot be built as a trunk standalone CSR-only app.
+            // Only the server may directly connect to the database.
+        }
+    }
 }
