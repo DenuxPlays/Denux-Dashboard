@@ -11,7 +11,6 @@ pub struct User {
 
 cfg_if! {
 if #[cfg(feature = "ssr")] {
-    use sqlx::SqlitePool;
     use crate::utilities::get_conn;
 
     impl User {
@@ -54,26 +53,24 @@ if #[cfg(feature = "ssr")] {
             }
         }
     }
-    
+
 }
 }
 
 #[server(Login, "/api")]
-pub async fn login(
-    cx: Scope,
-    email: String,
-    password: String,
-    ) -> Result<(), ServerFnError> {
+pub async fn login(cx: Scope, email: String, password: String) -> Result<(), ServerFnError> {
     log::info!("Email {}", email);
-   let user: User = User::get_from_email(email)
-       .await
-       .ok_or("User does not exist.")
-       .map_err(|e| ServerFnError::ServerError(e.to_string()))?;
+    let user: User = User::get_from_email(email)
+        .await
+        .ok_or("User does not exist.")
+        .map_err(|e| ServerFnError::ServerError(e.to_string()))?;
 
-   if password.eq(&user.password) {
-       leptos_actix::redirect(cx, "/user/start");
-       Ok(())
-   } else {
-        Err(ServerFnError::ServerError("Password does not match.".to_string()))
-   }
+    if password.eq(&user.password) {
+        leptos_axum::redirect(cx, "/user/start");
+        Ok(())
+    } else {
+        Err(ServerFnError::ServerError(
+            "Password does not match.".to_string(),
+        ))
+    }
 }

@@ -1,7 +1,7 @@
+use crate::auth::Login;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
-use crate::auth::Login;
 
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
