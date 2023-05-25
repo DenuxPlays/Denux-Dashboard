@@ -14,6 +14,7 @@ if #[cfg(feature = "ssr")] {
     use async_trait::async_trait;
     use sqlx::SqlitePool;
     use axum_session_auth::{SessionSqlitePool, Authentication};
+    use crate::utilities::{get_pool, auth};
     pub type AuthSession = axum_session_auth::AuthSession<User, i64, SessionSqlitePool, SqlitePool>;
 
     impl User {
@@ -76,7 +77,9 @@ if #[cfg(feature = "ssr")] {
 
 #[server(Login, "/api")]
 pub async fn login(cx: Scope, email: String, password: String) -> Result<(), ServerFnError> {
-    let pool = crate::utilities::get_pool(cx)?;
+    let pool = get_pool(cx)?;
+    let auth = auth(cx)?;
+
     let user: User = User::get_from_email(email, &pool)
         .await
         .ok_or("User does not exist.")
