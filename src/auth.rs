@@ -11,25 +11,26 @@ pub struct User {
 
 cfg_if! {
 if #[cfg(feature = "ssr")] {
-    use crate::utilities::get_conn;
+    use async_trait::async_trait;
+    use sqlx::SqlitePool;
+    use axum_session_auth::{SessionSqlitePool, Authentication};
+    pub type AuthSession = axum_session_auth::AuthSession<User, i64, SessionSqlitePool, SqlitePool>;
 
     impl User {
-        pub async fn get(id: i64) -> Option<Self> {
-            let mut conn = get_conn().await.ok()?;
+        pub async fn get(id: i64, pool: &SqlitePool) -> Option<Self> {
             let sqluser = sqlx::query_as::<_, SqlUser>("SELECT * FROM users WHERE id = ?")
                 .bind(id)
-                .fetch_one(&mut conn)
+                .fetch_one(pool)
                 .await
                 .ok()?;
 
             Some(sqluser.into_user())
         }
 
-        pub async fn get_from_email(email: String) -> Option<Self> {
-            let mut conn = get_conn().await.ok()?;
+        pub async fn get_from_email(email: String, pool: &SqlitePool) -> Option<Self> {
             let sqluser = sqlx::query_as::<_, SqlUser>("SELECT * FROM users WHERE email = ?")
                .bind(email)
-               .fetch_one(&mut conn)
+               .fetch_one(pool)
                .await
                .ok()?;
 
@@ -53,14 +54,30 @@ if #[cfg(feature = "ssr")] {
             }
         }
     }
+    
+    #[async_trait]
+    impl Authentication<User, i64, SqlitePool> for User {
+        async fn load_user(userid: i64, pool: Option<&SqlitePool>) -> Result<User, anyhow::Error> {
+            let pool = pool.unwrap();
 
+            User::get(userid, pool)
+                .await
+                .ok_or_else(|| anyhow::anyhow!("Cannot get user"))
+        }
+
+        fn is_authenticated(&self) -> bool { true }
+
+        fn is_active(&self) -> bool { true }
+
+        fn is_anonymous(&self) -> bool { false }
+    }
 }
 }
 
 #[server(Login, "/api")]
 pub async fn login(cx: Scope, email: String, password: String) -> Result<(), ServerFnError> {
-    log::info!("Email {}", email);
-    let user: User = User::get_from_email(email)
+    let pool = crate::utilities::get_pool(cx)?;
+    let user: User = User::get_from_email(email, &pool)
         .await
         .ok_or("User does not exist.")
         .map_err(|e| ServerFnError::ServerError(e.to_string()))?;

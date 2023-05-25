@@ -1,11 +1,12 @@
-pub mod app;
 use cfg_if::cfg_if;
 
-mod auth;
-mod components;
-mod utilities;
+pub mod app;
+pub mod auth;
+pub mod components;
+pub mod utilities;
 pub mod fileserv;
-mod error_template;
+pub mod error_template;
+pub mod state;
 
 cfg_if! {
 if #[cfg(feature = "hydrate")] {

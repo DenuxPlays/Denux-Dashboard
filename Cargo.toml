@@ -2,16 +2,16 @@
 name = "denux_dashboard"
 version = "0.1.0"
 edition = "2021"
-resolver = "2"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 #Axum
-axum = { version = "0.6.4", optional = true }
+axum = { version = "0.6.1", optional = true, features=["macros"] }
 
 #More leptos stuff
+anyhow = "1.0.66"
 console_error_panic_hook = "0.1"
 console_log = "1"
 cfg-if = "1"
@@ -20,6 +20,10 @@ tower-http = { version = "0.4", features = ["fs"], optional = true }
 thiserror = "1.0.38"
 tracing = { version = "0.1.37", optional = true }
 http = "0.2.8"
+async-trait = { version = "0.1", optional = true }
+rand = { version = "0.8.5", features = ["min_const_gen"], optional = true }
+futures = "0.3.25"
+bcrypt = { version = "0.14", optional = true }
 
 #Leptos
 leptos = { version = "0.3", default-features = false, features = [
@@ -60,26 +64,24 @@ serde = { version = "1.0", features = ["derive"]}
 [features]
 hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
 ssr = [
+    "dep:axum",
+    "dep:tower",
+    "dep:tower-http",
+    "dep:tokio",
+    "dep:axum_session_auth",
+    "dep:axum_session",
+    "dep:async-trait",
     "dep:sqlx",
-    "dep:axum", 
-    "dep:tokio", 
-    "dep:tower", 
-    "dep:tower-http", 
-    "dep:leptos_axum", 
-    "leptos/ssr", 
-    "leptos_meta/ssr", 
-    "leptos_router/ssr", 
-    "dep:tracing"
+    "dep:bcrypt",
+    "dep:rand",
+    "leptos/ssr",
+    "leptos_meta/ssr",
+    "leptos_router/ssr",
+    "dep:leptos_axum",
 ]
 
 [package.metadata.cargo-all-features]
-denylist = [
-    "axum",
-    "tokio",
-    "tower",
-    "tower-http",
-    "leptos_axum",
-]
+denylist = ["axum", "tower", "tower-http", "tokio", "sqlx", "leptos_axum"]
 skip_feature_sets = [["ssr", "hydrate"]]
 
 [profile.release]
