@@ -16,9 +16,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup cargo leptos
-      run: cargo install --locked cargo-leptos
-    - name: Build
-      run: cargo leptos build --release
+    - name: Setup wasm-pack
+      run: cargo install wasm-pack
+    - name: Building client-side
+      run: wasm-pack build --target=web --debug --no-default-features --features=hydrate
+    - name: Building server-side
+      run: cargo run --no-default-features --features=ssr
     - name: Run tests
       run: cargo leptos test
