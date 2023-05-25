@@ -13,6 +13,7 @@ cfg_if! {
 if #[cfg(feature = "ssr")] {
     use async_trait::async_trait;
     use sqlx::SqlitePool;
+    use bcrypt::{verify};
     use axum_session_auth::{SessionSqlitePool, Authentication};
     use crate::utilities::{get_pool, auth};
     pub type AuthSession = axum_session_auth::AuthSession<User, i64, SessionSqlitePool, SqlitePool>;
@@ -84,13 +85,13 @@ pub async fn login(cx: Scope, email: String, password: String) -> Result<(), Ser
         .await
         .ok_or("User does not exist.")
         .map_err(|e| ServerFnError::ServerError(e.to_string()))?;
-
+    
     if password.eq(&user.password) {
-        leptos_axum::redirect(cx, "/user/start");
-        Ok(())
-    } else {
-        Err(ServerFnError::ServerError(
-            "Password does not match.".to_string(),
-        ))
+            auth.login_user(user.id);
+            leptos_axum::redirect(cx, "/user/start");
+            Ok(())
+        } 
+    else {
+        Err(ServerFnError::ServerError("Password does not match.".to_string()))
     }
 }
