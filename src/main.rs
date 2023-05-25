@@ -1,9 +1,18 @@
-#[cfg(feature = "ssr")]
+use cfg_if::cfg_if;
+
+mod auth;
+mod utilities;
+
+cfg_if! {
+if #[cfg(feature = "ssr")] {
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     use actix_files::Files;
     use actix_web::*;
+    use denux_dashboard::*;
     use denux_dashboard::app::*;
+    use crate::auth;
     use leptos::*;
     use leptos_actix::{generate_route_list, LeptosRoutes};
 
@@ -16,7 +25,7 @@ async fn main() -> std::io::Result<()> {
         let leptos_options = &conf.leptos_options;
         let site_root = &leptos_options.site_root;
 
-        let _ = LoginFn::register();
+        _ = auth::Login::register();
 
         App::new()
             .route("/api/{tail:.*}", leptos_actix::handle_server_fns())
@@ -31,6 +40,8 @@ async fn main() -> std::io::Result<()> {
     .bind(&addr)?
     .run()
     .await
+}
+}
 }
 
 #[cfg(not(feature = "ssr"))]

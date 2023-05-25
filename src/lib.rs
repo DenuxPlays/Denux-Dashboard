@@ -2,6 +2,8 @@ pub mod app;
 use cfg_if::cfg_if;
 
 mod components;
+mod auth;
+mod utilities;
 
 cfg_if! {
 if #[cfg(feature = "hydrate")] {

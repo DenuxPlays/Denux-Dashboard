@@ -1,6 +1,7 @@
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
+use crate::auth::Login;
 
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
@@ -23,6 +24,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                 <Routes>
                     <Route path="" view=|cx| view! { cx, <HomePage/> }/>
                     <Route path="login" view=|cx| view! {cx, <LoginPage/> }/>
+                    <Route path="user/start" view=|cx| view! {cx, <UserHomepage/> }/>
                 </Routes>
             </main>
         </Router>
@@ -34,7 +36,7 @@ pub fn App(cx: Scope) -> impl IntoView {
 fn HomePage(cx: Scope) -> impl IntoView {
     view! { cx,
             <div id="navbar">
-                <a href="https://github.com/DenuxPlays" target="_blank">
+                <a href="https://github.com/DenuxPlays/Denux-Dashboard" target="_blank">
                     <img src="github-logo.svg" alt="Github Profile"/>
                 </a>
                 <div id="navbar-right">
@@ -49,7 +51,7 @@ fn HomePage(cx: Scope) -> impl IntoView {
 
 #[component]
 fn LoginPage(cx: Scope) -> impl IntoView {
-    let login_action = create_server_action::<LoginFn>(cx);
+    let login_action = create_server_action::<Login>(cx);
     view! { cx,
         <div class="centered">
             <ActionForm action=login_action>
@@ -67,13 +69,12 @@ fn LoginPage(cx: Scope) -> impl IntoView {
     }
 }
 
-#[server(LoginFn, "/api")]
-pub async fn login(email: String, password: String) -> Result<(), ServerFnError>{
-    log::info!("Login button pressed");
-    if email.eq_ignore_ascii_case("test@du-hs.dev") {
-        if password.eq("123HS") {
-            return Ok(());
-        }
+#[component]
+fn UserHomepage(cx: Scope) -> impl IntoView {
+    view! { cx,
+        <Title text="Denux - Logged in!" />
+        <div class="centered">
+            <p><b>"Logged in!"</b></p>
+        </div>
     }
-    return Err(ServerFnError::ServerError("401".to_string()));
 }

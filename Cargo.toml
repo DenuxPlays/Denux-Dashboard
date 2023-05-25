@@ -30,8 +30,14 @@ simple_logger = "4"
 #Wasm-bindge -> MUST BE 0.2.84 due to a very unstable api (check cargo leptos)
 wasm-bindgen = "=0.2.84"
 
+#IO & used for sqlite
+tokio = { version = "1.22.0", features = ["full"], optional = true }
+
 #Database stuff
-sqlx = {version="0.6", features = ["runtime-actix-rustls"], optional = true}
+sqlx = {version="0.6", features = [
+	"runtime-tokio-rustls",
+	"sqlite",
+	], optional = true}
 
 #Serde used for ssr.
 #Check leptos documentation on why this has to be included explicitly.
