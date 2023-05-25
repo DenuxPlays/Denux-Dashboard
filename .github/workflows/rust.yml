@@ -23,4 +23,4 @@ jobs:
     - name: Building server-side
       run: cargo build --no-default-features --features=ssr
     - name: Run tests
-      run: cargo leptos test
+      run: cargo test
