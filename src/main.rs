@@ -5,19 +5,17 @@ cfg_if! {
 if #[cfg(feature = "ssr")] {
     use axum::{
         response::{Response, IntoResponse},
-        routing::get,
+        routing::{get, Router},
         extract::{Path, State, RawQuery},
         http::{Request, header::HeaderMap},
         body::Body as AxumBody,
-        Router,
     };
     use denux_dashboard::app::App;
     use denux_dashboard::auth::*;
     use denux_dashboard::state::AppState;
-    use denux_dashboard::*;
     use denux_dashboard::fallback::file_and_error_handler;
     use leptos_axum::{generate_route_list, LeptosRoutes, handle_server_fns_with_context};
-    use leptos::{log, view, provide_context, get_configuration};
+    use leptos::{log, view, provide_context, get_configuration, ServerFn};
     use sqlx::{SqlitePool, sqlite::SqlitePoolOptions};
     use axum_session::{SessionConfig, SessionLayer, SessionStore};
     use axum_session_auth::{AuthSessionLayer, AuthConfig, SessionSqlitePool};
@@ -49,7 +47,7 @@ if #[cfg(feature = "ssr")] {
         simple_logger::init_with_level(log::Level::Info).expect("couldn't initialize logging");
 
         let pool = SqlitePoolOptions::new()
-            .connect("sqlite:Todos.db")
+            .connect("sqlite:dashboard.db")
             .await
             .expect("Could not make pool.");
 
@@ -58,6 +56,8 @@ if #[cfg(feature = "ssr")] {
         let auth_config = AuthConfig::<i64>::default();
         let session_store = SessionStore::<SessionSqlitePool>::new(Some(pool.clone().into()), session_config);
         session_store.initiate().await.unwrap();
+
+        _ = Login::register();
 
         // Setting this to None means we'll be using cargo-leptos and its env vars
         let conf = get_configuration(None).await.unwrap();
