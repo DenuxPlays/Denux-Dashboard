@@ -40,9 +40,7 @@ fn HomePage(cx: Scope) -> impl IntoView {
                 <a href="https://github.com/DenuxPlays/Denux-Dashboard" target="_blank">
                     <img src="/github-logo.svg" alt="Github Project"/>
                 </a>
-                <div id="navbar-right">
-                    <a href="/login">"Login"</a>
-                </div>
+                <a class="navbar-right" href="/login">"Login"</a>
             </div>
             <div class="centered" id="main">
                 <p><b>"Welcome to nothing"</b></p>
