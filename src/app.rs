@@ -1,4 +1,5 @@
 use crate::auth::Login;
+use crate::user::start_page::*;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
@@ -24,7 +25,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                 <Routes>
                     <Route path="" view=|cx| view! { cx, <HomePage/> }/>
                     <Route path="login" view=|cx| view! {cx, <LoginPage/> }/>
-                    <Route path="user/start" view=|cx| view! {cx, <UserHomepage/> }/>
+                    <Route path="user/start" view=|cx| view! {cx, <StartPage/> }/>
                 </Routes>
             </main>
         </Router>
@@ -37,7 +38,7 @@ fn HomePage(cx: Scope) -> impl IntoView {
     view! { cx,
             <div id="navbar">
                 <a href="https://github.com/DenuxPlays/Denux-Dashboard" target="_blank">
-                    <img src="github-logo.svg" alt="Github Profile"/>
+                    <img src="/github-logo.svg" alt="Github Project"/>
                 </a>
                 <div id="navbar-right">
                     <a href="/login">"Login"</a>
@@ -66,15 +67,5 @@ fn LoginPage(cx: Scope) -> impl IntoView {
                 <input type="submit" value="Login"/>
             </ActionForm>
       </div>
-    }
-}
-
-#[component]
-fn UserHomepage(cx: Scope) -> impl IntoView {
-    view! { cx,
-        <Title text="Denux - Logged in!" />
-        <div class="centered">
-            <p><b>"Logged in!"</b></p>
-        </div>
     }
 }

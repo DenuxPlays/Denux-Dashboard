@@ -9,6 +9,7 @@ pub mod error_template;
 pub mod state;
 pub mod fallback;
 pub mod errors;
+pub mod user;
 
 cfg_if! {
 if #[cfg(feature = "hydrate")] {

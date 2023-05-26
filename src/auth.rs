@@ -13,10 +13,15 @@ cfg_if! {
 if #[cfg(feature = "ssr")] {
     use async_trait::async_trait;
     use sqlx::SqlitePool;
-    use bcrypt::{verify};
     use axum_session_auth::{SessionSqlitePool, Authentication};
     use crate::utilities::{get_pool, auth};
     pub type AuthSession = axum_session_auth::AuthSession<User, i64, SessionSqlitePool, SqlitePool>;
+
+    pub fn register_server_functions() {
+        _ = Login::register();
+        _ = Logout::register();
+        _ = GetUser::register();
+    }
 
     impl User {
         pub async fn get(id: i64, pool: &SqlitePool) -> Option<Self> {
@@ -76,6 +81,12 @@ if #[cfg(feature = "ssr")] {
 }
 }
 
+#[server(GetUser, "/api")]
+pub async fn get_user(cx: Scope) -> Result<Option<User>, ServerFnError> {
+    let auth = auth(cx)?;
+    Ok(auth.current_user)
+}
+
 #[server(Login, "/api")]
 pub async fn login(cx: Scope, email: String, password: String) -> Result<(), ServerFnError> {
     let pool = get_pool(cx)?;
@@ -89,9 +100,18 @@ pub async fn login(cx: Scope, email: String, password: String) -> Result<(), Ser
     if password.eq(&user.password) {
             auth.login_user(user.id);
             leptos_axum::redirect(cx, "/user/start");
-            Ok(())
-        } 
+           Ok(())
+    } 
     else {
         Err(ServerFnError::ServerError("Password does not match.".to_string()))
     }
+}
+
+#[server(Logout, "/api")]
+pub async fn logout(cx: Scope) -> Result<(), ServerFnError>{
+    let auth = auth(cx)?;
+
+    auth.logout_user();
+    leptos_axum::redirect(cx, "/");
+    Ok(())
 }
