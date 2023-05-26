@@ -3,13 +3,13 @@ use cfg_if::cfg_if;
 pub mod app;
 pub mod auth;
 pub mod components;
-pub mod utilities;
-pub mod fileserv;
 pub mod error_template;
-pub mod state;
-pub mod fallback;
 pub mod errors;
+pub mod fallback;
+pub mod fileserv;
+pub mod state;
 pub mod user;
+pub mod utilities;
 
 cfg_if! {
 if #[cfg(feature = "hydrate")] {

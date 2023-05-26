@@ -13,9 +13,7 @@ impl DashboardError {
     pub fn status_code(&self) -> StatusCode {
         match self {
             DashboardError::NotFound => StatusCode::NOT_FOUND,
-            DashboardError::InternalServerError => {
-                StatusCode::INTERNAL_SERVER_ERROR
-            }
+            DashboardError::InternalServerError => StatusCode::INTERNAL_SERVER_ERROR,
         }
     }
 }

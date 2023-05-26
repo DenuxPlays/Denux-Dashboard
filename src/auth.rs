@@ -61,7 +61,7 @@ if #[cfg(feature = "ssr")] {
             }
         }
     }
-    
+
     #[async_trait]
     impl Authentication<User, i64, SqlitePool> for User {
         async fn load_user(userid: i64, pool: Option<&SqlitePool>) -> Result<User, anyhow::Error> {
@@ -96,19 +96,20 @@ pub async fn login(cx: Scope, email: String, password: String) -> Result<(), Ser
         .await
         .ok_or("User does not exist.")
         .map_err(|e| ServerFnError::ServerError(e.to_string()))?;
-    
+
     if password.eq(&user.password) {
-            auth.login_user(user.id);
-            leptos_axum::redirect(cx, "/user/start");
-           Ok(())
-    } 
-    else {
-        Err(ServerFnError::ServerError("Password does not match.".to_string()))
+        auth.login_user(user.id);
+        leptos_axum::redirect(cx, "/user/start");
+        Ok(())
+    } else {
+        Err(ServerFnError::ServerError(
+            "Password does not match.".to_string(),
+        ))
     }
 }
 
 #[server(Logout, "/api")]
-pub async fn logout(cx: Scope) -> Result<(), ServerFnError>{
+pub async fn logout(cx: Scope) -> Result<(), ServerFnError> {
     let auth = auth(cx)?;
 
     auth.logout_user();
