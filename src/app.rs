@@ -1,8 +1,8 @@
+use crate::page::login::LoginPage;
 use crate::user::start_page::*;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
-use crate::page::login::LoginPage;
 
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
