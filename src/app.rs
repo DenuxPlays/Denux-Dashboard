@@ -1,8 +1,8 @@
-use crate::auth::Login;
 use crate::user::start_page::*;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
+use crate::page::login::LoginPage;
 
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
@@ -45,25 +45,5 @@ fn HomePage(cx: Scope) -> impl IntoView {
             <div class="centered" id="main">
                 <p><b>"Welcome to nothing"</b></p>
             </div>
-    }
-}
-
-#[component]
-fn LoginPage(cx: Scope) -> impl IntoView {
-    let login_action = create_server_action::<Login>(cx);
-    view! { cx,
-        <div class="centered">
-            <ActionForm action=login_action>
-                <label>
-                    "E-Mail"
-                    <input type="text" name="email"/>
-                </label>
-                <label>
-                    "Password"
-                    <input type="password" name="password"/>
-                </label>
-                <input type="submit" value="Login"/>
-            </ActionForm>
-      </div>
     }
 }

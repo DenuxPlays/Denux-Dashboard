@@ -25,7 +25,7 @@ pub fn StartPage(cx: Scope) -> impl IntoView {
                 }.into_view(cx),
                 Ok(Some(user)) => view! {cx,
                     <div id="navbar">
-                        <div id="navbar-right">
+                        <div class="navbar-right">
                             <ActionForm action=logout_action>
                                 <input type="submit" value="Logout"/>
                             </ActionForm>
