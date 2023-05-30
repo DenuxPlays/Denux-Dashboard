@@ -53,10 +53,11 @@ body {
 
 .navbar-right {
 	height: var(--div-height);
-	width: 60px;
+	width: auto;
 	float: right;
 	margin: auto 0px;
 	text-align: center;
+	padding: 0px 5px 0px 5px;
 
 	/*Border*/
 	border-style: solid;

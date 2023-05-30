@@ -1,4 +1,5 @@
 use crate::page::login::LoginPage;
+use crate::auth::get_user;
 use crate::user::start_page::*;
 use leptos::*;
 use leptos_meta::*;
@@ -35,12 +36,31 @@ pub fn App(cx: Scope) -> impl IntoView {
 /// Renders the home page of your application.
 #[component]
 fn HomePage(cx: Scope) -> impl IntoView {
+    let user = create_resource(cx, move || {}, move |_| get_user(cx));
+    provide_meta_context(cx);
+
     view! { cx,
             <div id="navbar">
                 <a href="https://github.com/DenuxPlays/Denux-Dashboard" target="_blank">
                     <img src="/github-logo.svg" alt="Github Project"/>
                 </a>
-                <a class="navbar-right" href="/login">"Login"</a>
+                <Transition fallback=move || view! {cx, <span class="navbar-right">"Loading..."</span>}>
+                    {move || {
+                        user.read(cx).map(|user| match user {
+                            Err(e) => view! {cx,
+                                <a class="navbar-right" href="/login">"Login"</a>
+                                <span id="navbar-right">{format!("Login error: {}", e.to_string())}</span>
+                            }.into_view(cx),
+                            Ok(None) => view! {cx,
+                                <a class="navbar-right" href="/login">"Login"</a>
+                            }.into_view(cx),
+                            Ok(Some(user)) => view! {cx,
+                                <a class="navbar-right" href="/user/start">{format!("{}", user.email)}</a>
+                        }.into_view(cx)
+                        })
+                        }
+                 }
+                </Transition>
             </div>
             <div class="centered" id="main">
                 <p><b>"Welcome to nothing"</b></p>

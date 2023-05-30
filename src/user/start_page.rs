@@ -16,7 +16,6 @@ pub fn StartPage(cx: Scope) -> impl IntoView {
         {move || {
             user.read(cx).map(|user| match user {
                 Err(e) => view! {cx,
-                    <p>"Signup"</p>
                     <p>"Login"</p>
                     <span>{format!("Login error: {}", e.to_string())}</span>
                 }.into_view(cx),
