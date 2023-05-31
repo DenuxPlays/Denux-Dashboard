@@ -1,5 +1,6 @@
-use crate::page::login::LoginPage;
 use crate::auth::get_user;
+use crate::page::login::LoginPage;
+use crate::user::profile::*;
 use crate::user::start_page::*;
 use leptos::*;
 use leptos_meta::*;
@@ -27,6 +28,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                     <Route path="" view=|cx| view! { cx, <HomePage/> }/>
                     <Route path="login" view=|cx| view! {cx, <LoginPage/> }/>
                     <Route path="user/start" view=|cx| view! {cx, <StartPage/> }/>
+                    <Route path="user/profile" view=|cx| view! {cx, <ProfilePage/>}/>
                 </Routes>
             </main>
         </Router>
@@ -55,10 +57,10 @@ fn HomePage(cx: Scope) -> impl IntoView {
                                 <a class="navbar-right" href="/login">"Login"</a>
                             }.into_view(cx),
                             Ok(Some(user)) => view! {cx,
-                                <a class="navbar-right" href="/user/start">{format!("{}", user.email)}</a>
+                                <a class="navbar-right" href="/user/profile">{format!("{}", user.email)}</a>
                         }.into_view(cx)
                         })
-                        }
+                    }
                  }
                 </Transition>
             </div>
