@@ -26,7 +26,7 @@ leptos_meta = { git = "https://github.com/leptos-rs/leptos.git", default-feature
 leptos_router = { git = "https://github.com/leptos-rs/leptos.git", default-features = false }
 
 
-log = "0.4.18"
+log = "0.4.19"
 simple_logger = "4.2.0"
 serde = { version = "1.0.164", features = ["derive"] }
 axum = { version = "0.6.1", optional = true, features=["macros"] }
