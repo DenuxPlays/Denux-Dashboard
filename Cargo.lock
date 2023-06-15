@@ -112,12 +112,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "async_once"
-version = "0.2.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2ce4f10ea3abcd6617873bae9f91d1c5332b4a778bd9ce34d0cd517474c1de82"
-
-[[package]]
 name = "atoi"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -332,18 +326,16 @@ checksum = "89b2fd2a0dcf38d7971e2194b6b6eebab45ae01067456a7fd93d5547a61b70be"
 
 [[package]]
 name = "cached"
-version = "0.43.0"
+version = "0.44.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bc2fafddf188d13788e7099295a59b99e99b2148ab2195cae454e754cc099925"
+checksum = "b195e4fbc4b6862bbd065b991a34750399c119797efff72492f28a5864de8700"
 dependencies = [
  "async-trait",
- "async_once",
  "cached_proc_macro",
  "cached_proc_macro_types",
  "futures",
  "hashbrown 0.13.2",
  "instant",
- "lazy_static",
  "once_cell",
  "thiserror",
  "tokio",
@@ -351,9 +343,9 @@ dependencies = [
 
 [[package]]
 name = "cached_proc_macro"
-version = "0.16.0"
+version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e10ca87c81aaa3a949dbbe2b5e6c2c45dbc94ba4897e45ea31ff9ec5087be3dc"
+checksum = "b48814962d2fd604c50d2b9433c2a41a0ab567779ee2c02f7fba6eca1221f082"
 dependencies = [
  "cached_proc_macro_types",
  "darling",
@@ -1305,7 +1297,7 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 [[package]]
 name = "leptos"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "cfg-if",
  "leptos_config",
@@ -1321,7 +1313,7 @@ dependencies = [
 [[package]]
 name = "leptos_axum"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "axum",
  "futures",
@@ -1342,7 +1334,7 @@ dependencies = [
 [[package]]
 name = "leptos_config"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "config",
  "regex",
@@ -1354,7 +1346,7 @@ dependencies = [
 [[package]]
 name = "leptos_dom"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "async-recursion",
  "cfg-if",
@@ -1381,7 +1373,7 @@ dependencies = [
 [[package]]
 name = "leptos_hot_reload"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "anyhow",
  "camino",
@@ -1398,7 +1390,7 @@ dependencies = [
 [[package]]
 name = "leptos_integration_utils"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "futures",
  "leptos",
@@ -1411,7 +1403,7 @@ dependencies = [
 [[package]]
 name = "leptos_macro"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "attribute-derive",
  "cfg-if",
@@ -1433,7 +1425,7 @@ dependencies = [
 [[package]]
 name = "leptos_meta"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "cfg-if",
  "indexmap",
@@ -1446,7 +1438,7 @@ dependencies = [
 [[package]]
 name = "leptos_reactive"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "base64 0.21.2",
  "cfg-if",
@@ -1470,7 +1462,7 @@ dependencies = [
 [[package]]
 name = "leptos_router"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "cached",
  "cfg-if",
@@ -1498,7 +1490,7 @@ dependencies = [
 [[package]]
 name = "leptos_server"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "inventory",
  "lazy_static",
@@ -2269,7 +2261,7 @@ dependencies = [
 [[package]]
 name = "server_fn"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "ciborium",
  "const_format",
@@ -2293,7 +2285,7 @@ dependencies = [
 [[package]]
 name = "server_fn_macro"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "const_format",
  "proc-macro-error",
@@ -2307,7 +2299,7 @@ dependencies = [
 [[package]]
 name = "server_fn_macro_default"
 version = "0.3.0"
-source = "git+https://github.com/leptos-rs/leptos.git#3a522aef5d89ff868e6a3b7dae6dba9cb5c06c7a"
+source = "git+https://github.com/leptos-rs/leptos.git#d45d92433f2d50af18b79691f6f11404db1533b0"
 dependencies = [
  "server_fn_macro",
  "syn 2.0.18",
