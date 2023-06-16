@@ -57,8 +57,6 @@ if #[cfg(feature = "ssr")] {
         let session_store = SessionStore::<SessionSqlitePool>::new(Some(pool.clone().into()), session_config);
         session_store.initiate().await.unwrap();
 
-        register_server_functions();
-
         // Setting this to None means we'll be using cargo-leptos and its env vars
         let conf = get_configuration(None).await.unwrap();
         let leptos_options = conf.leptos_options;

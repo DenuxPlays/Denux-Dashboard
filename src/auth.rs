@@ -17,12 +17,6 @@ if #[cfg(feature = "ssr")] {
     use crate::utilities::{get_pool, auth};
     pub type AuthSession = axum_session_auth::AuthSession<User, i64, SessionSqlitePool, SqlitePool>;
 
-    pub fn register_server_functions() {
-        _ = Login::register();
-        _ = Logout::register();
-        _ = GetUser::register();
-    }
-
     impl User {
         pub async fn get(id: i64, pool: &SqlitePool) -> Option<Self> {
             let sqluser = sqlx::query_as::<_, SqlUser>("SELECT * FROM users WHERE id = ?")
