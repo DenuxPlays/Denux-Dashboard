@@ -47,7 +47,7 @@ axum_session_auth = { version = "0.2.0", features = [
 axum_session = { version = "0.2.3", features = [
 	"sqlite-rustls",
 ], optional = true }
-async-trait = { version = "0.1.69", optional = true }
+async-trait = { version = "0.1.70", optional = true }
 
 [features]
 hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
