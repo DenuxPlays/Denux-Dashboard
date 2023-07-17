@@ -10,7 +10,7 @@ repository = "https://github.com/DenuxPlays/Denux-Dashboard"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-anyhow = "1.0.66"
+anyhow = "1.0.72"
 console_log = "1.0.0"
 rand = { version = "0.8.5", features = ["min_const_gen"], optional = true }
 console_error_panic_hook = "0.1.7"
