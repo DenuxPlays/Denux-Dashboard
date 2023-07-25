@@ -18,13 +18,13 @@ futures = "0.3.25"
 cfg-if = "1.0.0"
 
 #Leptos
-leptos = { git = "https://github.com/leptos-rs/leptos.git", features = [
+leptos = { version = "0.4.6", features = [
   "serde",
   "nightly"
 ] }
-leptos_axum = { git = "https://github.com/leptos-rs/leptos.git", optional = true }
-leptos_meta = { git = "https://github.com/leptos-rs/leptos.git", features = ["nightly"] }
-leptos_router = { git = "https://github.com/leptos-rs/leptos.git", features = ["nightly"] }
+leptos_axum = { version = "0.4.6", optional = true }
+leptos_meta = { version = "0.4.6", features = ["nightly"] }
+leptos_router = { version = "0.4.6", features = ["nightly"] }
 
 
 log = "0.4.19"
