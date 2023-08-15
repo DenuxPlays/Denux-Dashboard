@@ -76,6 +76,7 @@ inherits = "release"
 opt-level = 'z'
 lto = true
 codegen-units = 1
+panic = "abort"
 
 [package.metadata.leptos]
 #Enabled size-optimization for the wasm build
