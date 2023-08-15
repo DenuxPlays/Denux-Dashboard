@@ -18,22 +18,22 @@ futures = "0.3.25"
 cfg-if = "1.0.0"
 
 #Leptos
-leptos = { version = "0.4.6", features = [
+leptos = { version = "0.4.8", features = [
   "serde",
   "nightly"
 ] }
-leptos_axum = { version = "0.4.6", optional = true }
-leptos_meta = { version = "0.4.6", features = ["nightly"] }
-leptos_router = { version = "0.4.6", features = ["nightly"] }
+leptos_axum = { version = "0.4.8", optional = true }
+leptos_meta = { version = "0.4.8", features = ["nightly"] }
+leptos_router = { version = "0.4.8", features = ["nightly"] }
 
 
-log = "0.4.19"
+log = "0.4.20"
 simple_logger = "4.2.0"
-serde = { version = "1.0.168", features = ["derive"] }
-axum = { version = "0.6.1", optional = true, features=["macros"] }
+serde = { version = "1.0.183", features = ["derive"] }
+axum = { version = "0.6.20", optional = true, features=["macros"] }
 tower = { version = "0.4.13", optional = true }
 tower-http = { version = "0.4", features = ["fs"], optional = true }
-tokio = { version = "1.29.1", features = ["full"], optional = true }
+tokio = { version = "1.31.0", features = ["full"], optional = true }
 http = { version = "0.2.8" }
 sqlx = { version = "0.6.3", features = [
 	"runtime-tokio-rustls",
@@ -47,7 +47,7 @@ axum_session_auth = { version = "0.2.0", features = [
 axum_session = { version = "0.2.3", features = [
 	"sqlite-rustls",
 ], optional = true }
-async-trait = { version = "0.1.71", optional = true }
+async-trait = { version = "0.1.73", optional = true }
 
 [features]
 hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
