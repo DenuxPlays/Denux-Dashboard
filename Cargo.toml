@@ -18,7 +18,7 @@ futures = "0.3.25"
 cfg-if = "1.0.0"
 
 #Leptos
-leptos = { version = "0.4.10", features = [
+leptos = { version = "0.5.0", features = [
   "serde",
   "nightly"
 ] }
