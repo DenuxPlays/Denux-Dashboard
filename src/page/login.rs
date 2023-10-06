@@ -3,9 +3,9 @@ use leptos::*;
 use leptos_router::*;
 
 #[component]
-pub fn LoginPage(cx: Scope) -> impl IntoView {
-    let login_action = create_server_action::<Login>(cx);
-    view! { cx,
+pub fn LoginPage() -> impl IntoView {
+    let login_action = create_server_action::<Login>();
+    view! {
         <div class="centered" id="login-form">
             <ActionForm action=login_action>
                 <label>

@@ -18,13 +18,13 @@ futures = "0.3.25"
 cfg-if = "1.0.0"
 
 #Leptos
-leptos = { version = "0.4.10", features = [
+leptos = { version = "0.5", features = [
   "serde",
   "nightly"
 ] }
-leptos_axum = { version = "0.4.10", optional = true }
-leptos_meta = { version = "0.4.10", features = ["nightly"] }
-leptos_router = { version = "0.4.10", features = ["nightly"] }
+leptos_axum = { version = "0.5", optional = true }
+leptos_meta = { version = "0.5", features = ["nightly"] }
+leptos_router = { version = "0.5", features = ["nightly"] }
 
 
 log = "0.4.20"
@@ -71,6 +71,7 @@ ssr = [
 denylist = ["axum", "tower", "tower-http", "tokio", "sqlx", "leptos_axum"]
 skip_feature_sets = [["ssr", "hydrate"]]
 
+# Defines a size-optimized profile for the WASM bundle in release mode
 [profile.wasm-release]
 inherits = "release"
 opt-level = 'z'
@@ -79,8 +80,6 @@ codegen-units = 1
 panic = "abort"
 
 [package.metadata.leptos]
-#Enabled size-optimization for the wasm build
-lib-profile-release = "wasm-release"
 # The name used by wasm-bindgen/cargo-leptos for the JS/WASM bundle. Defaults to the crate name   
 output-name = "denux_dashboard"
 # The site root folder is where cargo-leptos generate all output. WARNING: all content of this folder will be erased on a rebuild. Use it in your server setup.
@@ -129,3 +128,8 @@ lib-features = ["hydrate"]
 #
 # Optional. Defaults to false.
 lib-default-features = false
+
+# The profile to use for the lib target when compiling for release
+#
+# Optional. Defaults to "release".
+lib-profile-release = "wasm-release"

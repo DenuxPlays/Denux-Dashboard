@@ -76,15 +76,15 @@ if #[cfg(feature = "ssr")] {
 }
 
 #[server(GetUser, "/api")]
-pub async fn get_user(cx: Scope) -> Result<Option<User>, ServerFnError> {
-    let auth = auth(cx)?;
+pub async fn get_user() -> Result<Option<User>, ServerFnError> {
+    let auth = auth()?;
     Ok(auth.current_user)
 }
 
 #[server(Login, "/api")]
-pub async fn login(cx: Scope, email: String, password: String) -> Result<(), ServerFnError> {
-    let pool = get_pool(cx)?;
-    let auth = auth(cx)?;
+pub async fn login(email: String, password: String) -> Result<(), ServerFnError> {
+    let pool = get_pool()?;
+    let auth = auth()?;
 
     let user: User = User::get_from_email(email, &pool)
         .await
@@ -93,7 +93,7 @@ pub async fn login(cx: Scope, email: String, password: String) -> Result<(), Ser
 
     if password.eq(&user.password) {
         auth.login_user(user.id);
-        leptos_axum::redirect(cx, "/user/start");
+        leptos_axum::redirect("/user/start");
         Ok(())
     } else {
         Err(ServerFnError::ServerError(
@@ -103,10 +103,10 @@ pub async fn login(cx: Scope, email: String, password: String) -> Result<(), Ser
 }
 
 #[server(Logout, "/api")]
-pub async fn logout(cx: Scope) -> Result<(), ServerFnError> {
-    let auth = auth(cx)?;
+pub async fn logout() -> Result<(), ServerFnError> {
+    let auth = auth()?;
 
     auth.logout_user();
-    leptos_axum::redirect(cx, "/");
+    leptos_axum::redirect("/");
     Ok(())
 }

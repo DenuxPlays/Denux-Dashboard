@@ -6,14 +6,14 @@ if #[cfg(feature = "ssr")] {
     use sqlx::SqlitePool;
     use crate::auth::*;
 
-    pub fn get_pool(cx: Scope) -> Result<SqlitePool, ServerFnError> {
-        use_context::<SqlitePool>(cx)
+    pub fn get_pool() -> Result<SqlitePool, ServerFnError> {
+        use_context::<SqlitePool>()
             .ok_or("Pool missing.")
             .map_err(|e| ServerFnError::ServerError(e.to_string()))
     }
 
-    pub fn auth(cx: Scope) -> Result<AuthSession, ServerFnError> {
-        use_context::<AuthSession>(cx)
+    pub fn auth() -> Result<AuthSession, ServerFnError> {
+        use_context::<AuthSession>()
             .ok_or("Auth session missing.")
             .map_err(|e| ServerFnError::ServerError(e.to_string()))
     }

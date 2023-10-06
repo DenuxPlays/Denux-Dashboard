@@ -13,9 +13,8 @@ if #[cfg(feature = "ssr")] {
     use denux_dashboard::app::App;
     use denux_dashboard::auth::*;
     use denux_dashboard::state::AppState;
-    use denux_dashboard::fallback::file_and_error_handler;
     use leptos_axum::{generate_route_list, LeptosRoutes, handle_server_fns_with_context};
-    use leptos::{log, view, provide_context, get_configuration};
+    use leptos::{logging::log, view, provide_context, get_configuration};
     use sqlx::{SqlitePool, sqlite::SqlitePoolOptions};
     use axum_session::{SessionConfig, SessionLayer, SessionStore};
     use axum_session_auth::{AuthSessionLayer, AuthConfig, SessionSqlitePool};
@@ -25,19 +24,19 @@ if #[cfg(feature = "ssr")] {
 
         log!("{:?}", path);
 
-        handle_server_fns_with_context(path, headers, raw_query, move |cx| {
-            provide_context(cx, auth_session.clone());
-            provide_context(cx, app_state.pool.clone());
+        handle_server_fns_with_context(path, headers, raw_query, move || {
+            provide_context(auth_session.clone());
+            provide_context(app_state.pool.clone());
         }, request).await
     }
 
     async fn leptos_routes_handler(auth_session: AuthSession, State(app_state): State<AppState>, req: Request<AxumBody>) -> Response{
             let handler = leptos_axum::render_app_to_stream_with_context(app_state.leptos_options.clone(),
-            move |cx| {
-                provide_context(cx, auth_session.clone());
-                provide_context(cx, app_state.pool.clone());
+            move || {
+                provide_context(auth_session.clone());
+                provide_context(app_state.pool.clone());
             },
-            |cx| view! { cx, <App/> }
+            || view! { <App/> }
         );
         handler(req).await.into_response()
     }
@@ -61,7 +60,7 @@ if #[cfg(feature = "ssr")] {
         let conf = get_configuration(None).await.unwrap();
         let leptos_options = conf.leptos_options;
         let addr = leptos_options.site_addr;
-        let routes = generate_route_list(|cx| view! { cx, <App/> }).await;
+        let routes = generate_route_list(|| view! { <App/> });
 
         let app_state = AppState{
             leptos_options,
@@ -72,7 +71,6 @@ if #[cfg(feature = "ssr")] {
         let app = Router::new()
         .route("/api/*fn_name", get(server_fn_handler).post(server_fn_handler))
         .leptos_routes_with_handler(routes, get(leptos_routes_handler) )
-        .fallback(file_and_error_handler)
         .layer(AuthSessionLayer::<User, i64, SessionSqlitePool, SqlitePool>::new(Some(pool.clone()))
         .with_config(auth_config))
         .layer(SessionLayer::new(session_store))
