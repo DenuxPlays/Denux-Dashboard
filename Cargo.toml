@@ -23,7 +23,7 @@ leptos = { version = "0.4.10", features = [
   "nightly"
 ] }
 leptos_axum = { version = "0.4.10", optional = true }
-leptos_meta = { version = "0.4.10", features = ["nightly"] }
+leptos_meta = { version = "0.5.1", features = ["nightly"] }
 leptos_router = { version = "0.4.10", features = ["nightly"] }
 
 
