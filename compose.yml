@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  rust:
+    build:
+      context: .
+      dockerfile: docker/rust/Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./src/:/usr/src/dashboard/src
+      - ./style:/usr/src/dashboard/style
+      - ./Cargo.toml:/usr/src/dashboard/Cargo.toml
+      - ./Cargo.lock:/usr/src/dashboard/Cargo.lock
+      - ./dashboard.db:/app/dashboard.db
+    ports:
+      - "3000:3000"
