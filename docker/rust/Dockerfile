@@ -28,9 +28,16 @@ FROM alpine:3.18.4
 RUN apk update
 
 # Copy the server binary to the /app directory
-COPY --from=builder /app/target/release/denux_dashboard /app/
+COPY --from=builder /app/target/release/denux-dashboard /app/
 # /target/site contains our JS/WASM/CSS, etc.
 COPY --from=builder /app/target/site /app/site
 WORKDIR /app
 
-ENTRYPOINT ["/app/denux_dashboard"]
+# Set any required env variables and
+ENV RUST_LOG="info"
+ENV LEPTOS_SITE_ADDR="0.0.0.0:8080"
+ENV LEPTOS_SITE_ROOT="site"
+EXPOSE 8080
+
+# Run the server
+CMD ["/app/denux-dashboard"]

@@ -7,9 +7,10 @@ services:
     restart: unless-stopped
     volumes:
       - ./src/:/usr/src/dashboard/src
+      - ./target/:/usr/src/dashboard/target
       - ./style:/usr/src/dashboard/style
+      - ./assets:/usr/src/dashboard/assets
       - ./Cargo.toml:/usr/src/dashboard/Cargo.toml
       - ./Cargo.lock:/usr/src/dashboard/Cargo.lock
-      - ./dashboard.db:/app/dashboard.db
     ports:
-      - "3000:3000"
+      - "5739:8080"
