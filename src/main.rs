@@ -1,98 +1,69 @@
-use cfg_if::cfg_if;
+#[cfg(feature = "ssr")]
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    use actix_files::Files;
+    use actix_web::*;
+    use leptos::*;
+    use leptos_actix::{generate_route_list, LeptosRoutes};
+    use denux_dashboard::app::*;
 
-// boilerplate to run in different modes
-cfg_if! {
-if #[cfg(feature = "ssr")] {
-    use axum::{
-        response::{Response, IntoResponse},
-        routing::{get, Router},
-        extract::{Path, State, RawQuery},
-        http::{Request, header::HeaderMap},
-        body::Body as AxumBody,
-    };
-    use denux_dashboard::app::App;
-    use denux_dashboard::auth::*;
-    use denux_dashboard::state::AppState;
-    use denux_dashboard::fallback::file_and_error_handler;
-    use leptos_axum::{generate_route_list, LeptosRoutes, handle_server_fns_with_context};
-    use leptos::{log, view, provide_context, get_configuration};
-    use sqlx::{SqlitePool, sqlite::SqlitePoolOptions};
-    use axum_session::{SessionConfig, SessionLayer, SessionStore};
-    use axum_session_auth::{AuthSessionLayer, AuthConfig, SessionSqlitePool};
+    let conf = get_configuration(None).await.unwrap();
+    let addr = conf.leptos_options.site_addr;
+    // Generate the list of routes in your Leptos App
+    let routes = generate_route_list(App);
+    println!("listening on http://{}", &addr);
 
-    async fn server_fn_handler(State(app_state): State<AppState>, auth_session: AuthSession, path: Path<String>, headers: HeaderMap, raw_query: RawQuery,
-    request: Request<AxumBody>) -> impl IntoResponse {
+    HttpServer::new(move || {
+        let leptos_options = &conf.leptos_options;
+        let site_root = &leptos_options.site_root;
 
-        log!("{:?}", path);
-
-        handle_server_fns_with_context(path, headers, raw_query, move |cx| {
-            provide_context(cx, auth_session.clone());
-            provide_context(cx, app_state.pool.clone());
-        }, request).await
-    }
-
-    async fn leptos_routes_handler(auth_session: AuthSession, State(app_state): State<AppState>, req: Request<AxumBody>) -> Response{
-            let handler = leptos_axum::render_app_to_stream_with_context(app_state.leptos_options.clone(),
-            move |cx| {
-                provide_context(cx, auth_session.clone());
-                provide_context(cx, app_state.pool.clone());
-            },
-            |cx| view! { cx, <App/> }
-        );
-        handler(req).await.into_response()
-    }
-
-    #[tokio::main]
-    async fn main() {
-        simple_logger::init_with_level(log::Level::Info).expect("couldn't initialize logging");
-
-        let pool = SqlitePoolOptions::new()
-            .connect("sqlite:dashboard.db")
-            .await
-            .expect("Could not make pool.");
-
-        // Auth section
-        let session_config = SessionConfig::default().with_table_name("dashboard_session");
-        let auth_config = AuthConfig::<i64>::default();
-        let session_store = SessionStore::<SessionSqlitePool>::new(Some(pool.clone().into()), session_config);
-        session_store.initiate().await.unwrap();
-
-        // Setting this to None means we'll be using cargo-leptos and its env vars
-        let conf = get_configuration(None).await.unwrap();
-        let leptos_options = conf.leptos_options;
-        let addr = leptos_options.site_addr;
-        let routes = generate_route_list(|cx| view! { cx, <App/> }).await;
-
-        let app_state = AppState{
-            leptos_options,
-            pool: pool.clone(),
-        };
-
-        // build our application with a route
-        let app = Router::new()
-        .route("/api/*fn_name", get(server_fn_handler).post(server_fn_handler))
-        .leptos_routes_with_handler(routes, get(leptos_routes_handler) )
-        .fallback(file_and_error_handler)
-        .layer(AuthSessionLayer::<User, i64, SessionSqlitePool, SqlitePool>::new(Some(pool.clone()))
-        .with_config(auth_config))
-        .layer(SessionLayer::new(session_store))
-        .with_state(app_state);
-
-        // run our app with hyper
-        // `axum::Server` is a re-export of `hyper::Server`
-        log!("listening on http://{}", &addr);
-        axum::Server::bind(&addr)
-            .serve(app.into_make_service())
-            .await
-            .unwrap();
-    }
+        App::new()
+            .route("/api/{tail:.*}", leptos_actix::handle_server_fns())
+            // serve JS/WASM/CSS from `pkg`
+            .service(Files::new("/pkg", format!("{site_root}/pkg")))
+            // serve other assets from the `assets` directory
+            .service(Files::new("/assets", site_root))
+            // serve the favicon from /favicon.ico
+            .service(favicon)
+            .leptos_routes(leptos_options.to_owned(), routes.to_owned(), App)
+            .app_data(web::Data::new(leptos_options.to_owned()))
+        //.wrap(middleware::Compress::default())
+    })
+    .bind(&addr)?
+    .run()
+    .await
 }
 
-    // client-only stuff for Trunk
-    else {
-        pub fn main() {
-            // This example cannot be built as a trunk standalone CSR-only app.
-            // Only the server may directly connect to the database.
-        }
-    }
+#[cfg(feature = "ssr")]
+#[actix_web::get("favicon.ico")]
+async fn favicon(
+    leptos_options: actix_web::web::Data<leptos::LeptosOptions>,
+) -> actix_web::Result<actix_files::NamedFile> {
+    let leptos_options = leptos_options.into_inner();
+    let site_root = &leptos_options.site_root;
+    Ok(actix_files::NamedFile::open(format!(
+        "{site_root}/favicon.ico"
+    ))?)
+}
+
+#[cfg(not(any(feature = "ssr", feature = "csr")))]
+pub fn main() {
+    // no client-side main function
+    // unless we want this to work with e.g., Trunk for pure client-side testing
+    // see lib.rs for hydration function instead
+    // see optional feature `csr` instead
+}
+
+#[cfg(all(not(feature = "ssr"), feature = "csr"))]
+pub fn main() {
+    // a client-side main function is required for using `trunk serve`
+    // prefer using `cargo leptos serve` instead
+    // to run: `trunk serve --open --features csr`
+    use leptos::*;
+    use denux_dashboard::app::*;
+    use wasm_bindgen::prelude::wasm_bindgen;
+
+    console_error_panic_hook::set_once();
+
+    leptos::mount_to_body(App);
 }

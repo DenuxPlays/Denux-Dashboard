@@ -1,66 +1,60 @@
 @import "utility.scss";
-@import "login.scss";
-@import "/fonts/inter/inter.css";
-
-@font-face {
-    font-family: Inter;
-}
 
 body {
-	font-family: "Inter";
+  font-family: Inter, serif;
 
-	color: #ffffff;
-	background-color: #000000;
+  color: #ffffff;
+  background-color: #000000;
 }
 
 #main {
-	font-weight: 800px;
-	font-size: 80px;
+  font-weight: 800;
+  font-size: 80px;
 }
 
 #navbar {
-	--div-height: 40px;
-	height: var(--div-height);
-	position: fixed;
-	left: 10px; 
-	right: 10px;
-	top: 10px;
+  --div-height: 40px;
+  height: var(--div-height);
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  top: 10px;
 
-	padding: 5px;
+  padding: 5px;
 
-	overflow: hidden;
-	list-style-type: none;
+  overflow: hidden;
+  list-style-type: none;
 
-	img {
-		height: var(--div-height);
-	}
+  img {
+    height: var(--div-height);
+  }
 
-	a, input {
-		line-height: var(--div-height);
-		vertical-align: text-top;
-		text-decoration:none;
-		color: white;
-	}
-	
-	input {
-		background-color: black;
-		border: none;
-		cursor: pointer;
-		padding: 0px;
-	}
+  a, input {
+    line-height: var(--div-height);
+    vertical-align: text-top;
+    text-decoration: none;
+    color: white;
+  }
+
+  input {
+    background-color: black;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
 
 }
 
 .navbar-right {
-	height: var(--div-height);
-	width: auto;
-	float: right;
-	margin: auto 0px;
-	text-align: center;
-	padding: 0px 5px 0px 5px;
+  height: var(--div-height);
+  width: auto;
+  float: right;
+  margin: auto 0;
+  text-align: center;
+  padding: 0 5px 0 5px;
 
-	/*Border*/
-	border-style: solid;
-	border-width: 2px;
-	border-radius: 5px;
+  /*Border*/
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
 }
