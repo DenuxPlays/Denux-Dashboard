@@ -2,16 +2,10 @@ FROM rust:1.74.0-alpine3.18 as builder
 
 WORKDIR /usr/src/dashboard
 RUN apk upgrade
-RUN apk add --no-cache musl-dev libressl-dev
-
-# Install cargo-binstall, which makes it easier to install other
-# cargo extensions like cargo-leptos
-RUN wget https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz
-RUN tar -xvf cargo-binstall-x86_64-unknown-linux-musl.tgz
-RUN cp cargo-binstall /usr/local/cargo/bin
+RUN apk add --no-cache musl-dev curl
 
 # Install cargo-leptos
-RUN cargo binstall cargo-leptos -y
+RUN curl --proto '=https' --tlsv1.2 -LsSf https://github.com/leptos-rs/cargo-leptos/releases/download/0.2.5/cargo-leptos-installer.sh | sh
 
 # Add the WASM target
 RUN rustup target add wasm32-unknown-unknown
@@ -22,7 +16,7 @@ WORKDIR /app
 COPY . .
 
 # Build the app
-RUN cargo leptos build --release -vv
+RUN cargo-leptos build --release -vv
 
 FROM alpine:3.18.4
 RUN apk update
