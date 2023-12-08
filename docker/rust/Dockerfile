@@ -18,7 +18,7 @@ COPY . .
 # Build the app
 RUN cargo-leptos build --release -vv
 
-FROM alpine:3.18.5
+FROM alpine:3.19.0
 RUN apk update
 
 # Copy the server binary to the /app directory
