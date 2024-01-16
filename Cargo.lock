@@ -1151,9 +1151,9 @@ dependencies = [
 
 [[package]]
 name = "leptos_actix"
-version = "0.5.4"
+version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "67b2b118a031de24b39be9ef2dcfa03e7e255e98d06a8aa2c53f220155424cf1"
+checksum = "f98e8fbbbdb0231af190071413555f5042c0d16635eabc368b929e6176ac85c3"
 dependencies = [
  "actix-http",
  "actix-web",
