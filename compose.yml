@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: docker/rust/Dockerfile
     restart: unless-stopped
+    environment:
+      LEPTOS_SITE_ADDR: "0.0.0.0:8080"
     volumes:
       - ./src/:/usr/src/dashboard/src
       - ./target/:/usr/src/dashboard/target
@@ -13,4 +15,4 @@ services:
       - ./Cargo.toml:/usr/src/dashboard/Cargo.toml
       - ./Cargo.lock:/usr/src/dashboard/Cargo.lock
     ports:
-      - "5739:8080"
+      - "127.0.0.1:5739:8080"
