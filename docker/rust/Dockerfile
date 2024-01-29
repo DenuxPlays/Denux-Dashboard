@@ -1,4 +1,4 @@
-FROM rust:1.75.0-alpine3.18 as builder
+FROM rust:1.75.0-alpine3.19  builder
 
 WORKDIR /usr/src/dashboard
 RUN apk upgrade
