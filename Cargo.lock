@@ -1151,9 +1151,9 @@ dependencies = [
 
 [[package]]
 name = "leptos_actix"
-version = "0.6.4"
+version = "0.6.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "37d29ab49972cb42335207c25dbe3bdc2736ae14678aab2b030267af0d8735bd"
+checksum = "44d3fc0f3b938e14c1132aee443ab56141eceab79e21da282a6cc3d9f65aa458"
 dependencies = [
  "actix-http",
  "actix-web",
@@ -1234,9 +1234,9 @@ dependencies = [
 
 [[package]]
 name = "leptos_integration_utils"
-version = "0.6.4"
+version = "0.6.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "55eb3cbc78aa67790799ef480270bef3d10e23f0a38e6fa3e4e42d797f931a13"
+checksum = "700bdb6d9d754964b576fa3b76a28a68adbd6ced6d7dc84a18e29e91a82c2376"
 dependencies = [
  "futures",
  "leptos",
@@ -1271,9 +1271,9 @@ dependencies = [
 
 [[package]]
 name = "leptos_meta"
-version = "0.6.4"
+version = "0.6.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4705c24a835c3e8a158a351fee971d9efb0060a9817f719a79e22666dd112558"
+checksum = "4bbbbd77839b4d3189c06319b32aaa3bc43510fb43f9c1bffb8e124a33decd6c"
 dependencies = [
  "cfg-if",
  "indexmap",
@@ -1312,9 +1312,9 @@ dependencies = [
 
 [[package]]
 name = "leptos_router"
-version = "0.6.4"
+version = "0.6.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "28334116fab9b903b31c8f6d2be254e86dd35265db6e0c0f5cfbc7b6c18ea0ef"
+checksum = "498159479603569e1d7c969cffa0817b73249e96f825c295743f8f4607a68cbe"
 dependencies = [
  "cached",
  "cfg-if",
