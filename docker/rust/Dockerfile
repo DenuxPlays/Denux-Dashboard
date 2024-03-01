@@ -27,6 +27,8 @@ COPY --from=builder /app/target/release/denux-dashboard /app/
 COPY --from=builder /app/target/site /app/site
 WORKDIR /app
 
+RUN find /app/site/pkg -type f -exec sh -c 'filename="$1"; ext="${filename##*.}"; base="${filename%.*}"; mv "$filename" "${base%%.*}.$ext"' _ {} \;
+
 # Set any required env variables and
 ENV RUST_LOG="info"
 ENV LEPTOS_SITE_ADDR="0.0.0.0:8080"
