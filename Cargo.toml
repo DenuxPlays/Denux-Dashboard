@@ -19,10 +19,10 @@ actix-web = { version = "4.5.1", optional = true, features = ["macros"] }
 console_error_panic_hook = "0.1.7"
 cfg-if = "1.0.0"
 http = { version = "1.0.0", optional = true }
-leptos = { version = "0.6.7" }
-leptos_meta = { version = "0.6.7" }
-leptos_actix = { version = "0.6.7", optional = true }
-leptos_router = { version = "0.6.7" }
+leptos = { version = "0.6.8" }
+leptos_meta = { version = "0.6.8" }
+leptos_actix = { version = "0.6.8", optional = true }
+leptos_router = { version = "0.6.8" }
 wasm-bindgen = "=0.2.91"
 
 [features]
