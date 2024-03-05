@@ -1129,9 +1129,9 @@ dependencies = [
 
 [[package]]
 name = "leptos_actix"
-version = "0.6.8"
+version = "0.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8d15b8eed4a9bd7f0f00ac2c3076ed8e871f1a073769265316afa19047c722c4"
+checksum = "9edb4789a15864a26d695038f42dcdf1d1c32d3a1f537751ce177c97f4f5e3dd"
 dependencies = [
  "actix-http",
  "actix-web",
@@ -1212,9 +1212,9 @@ dependencies = [
 
 [[package]]
 name = "leptos_integration_utils"
-version = "0.6.8"
+version = "0.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "936e99cf90d56a418ebb5c0088990e54cf51b901e84c57b1ab3610134b8d1c2a"
+checksum = "ff00799857159434d31b6bd1898e21c63f69f39289621da5a554fcab1c3e7300"
 dependencies = [
  "futures",
  "leptos",
@@ -1290,9 +1290,9 @@ dependencies = [
 
 [[package]]
 name = "leptos_router"
-version = "0.6.8"
+version = "0.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d955a81242ce897721e8d11f4a44db0cb422e098c7844260bd7645ec46a1a4b9"
+checksum = "9460a5dc184fa05d8eb635b687ad3220d02d2d23d6f49c3bf146aa71e427f423"
 dependencies = [
  "cached",
  "cfg-if",
