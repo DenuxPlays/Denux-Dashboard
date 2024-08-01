@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   rust:
     build:
@@ -9,7 +8,6 @@ services:
       LEPTOS_SITE_ADDR: "0.0.0.0:8080"
     volumes:
       - ./src/:/usr/src/dashboard/src
-      - ./target/:/usr/src/dashboard/target
       - ./style:/usr/src/dashboard/style
       - ./assets:/usr/src/dashboard/assets
       - ./Cargo.toml:/usr/src/dashboard/Cargo.toml
